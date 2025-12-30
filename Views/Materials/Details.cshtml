@@ -1,0 +1,72 @@
+@model MaterialManagement.Models.Material
+
+@{
+    ViewData["Title"] = "Material Details";
+}
+
+<h1>Material Details</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-box-seam"></i> @Model.Name</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">SKU</dt>
+                    <dd class="col-sm-9"><code>@Model.SKU</code></dd>
+
+                    <dt class="col-sm-3">Description</dt>
+                    <dd class="col-sm-9">@(Model.Description ?? "N/A")</dd>
+
+                    <dt class="col-sm-3">Category</dt>
+                    <dd class="col-sm-9">
+                        <span class="badge bg-secondary">@Model.Category?.Name</span>
+                    </dd>
+
+                    <dt class="col-sm-3">Quantity</dt>
+                    <dd class="col-sm-9">
+                        <strong>@Model.Quantity</strong>
+                        @if (Model.IsLowStock)
+                        {
+                            <span class="badge bg-warning text-dark ms-2">
+                                <i class="bi bi-exclamation-triangle"></i> Low Stock
+                            </span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-3">Minimum Quantity</dt>
+                    <dd class="col-sm-9">@Model.MinimumQuantity</dd>
+
+                    <dt class="col-sm-3">Unit Price</dt>
+                    <dd class="col-sm-9">@Model.UnitPrice.ToString("C")</dd>
+
+                    <dt class="col-sm-3">Total Value</dt>
+                    <dd class="col-sm-9">
+                        <strong class="text-success">@((Model.Quantity * Model.UnitPrice).ToString("C"))</strong>
+                    </dd>
+
+                    <dt class="col-sm-3">Created Date</dt>
+                    <dd class="col-sm-9">@Model.CreatedDate.ToString("MMM dd, yyyy HH:mm")</dd>
+
+                    <dt class="col-sm-3">Last Modified</dt>
+                    <dd class="col-sm-9">@Model.LastModifiedDate.ToString("MMM dd, yyyy HH:mm")</dd>
+                </dl>
+
+                <div class="mt-4">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Delete
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
